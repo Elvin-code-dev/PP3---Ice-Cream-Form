@@ -1,27 +1,19 @@
-// Import the express module
-
-import express from "express";
-
-// Create an instance of an Express application
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Define the port number where our server will listen
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const PORT = 3001;
+app.use(express.static('public'));
 
-// Define a default "route" ('/')
-
-// req: contains information about the incoming request
-
-// res: allows us to send back a response to the client
-app.use(express.static("public"));
-app.get("/", (req, res) => {
-	res.sendFile(`${import.meta.dirname}/views/home.html`);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'home.html'));
 });
 
-// Start the server and listen on the specified port
-
 app.listen(PORT, () => {
-	console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
